@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Currency Notes Calculator</title>
+    <title>Currency Unit Calculator</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -28,102 +28,81 @@
             color: #333;
         }
 
-        .tab-content {
-            display: none;
-        }
-
-        #amount:checked + #amount-content,
-        #result:checked + #result-content {
-            display: block;
-        }
-
-        label {
-            cursor: pointer;
-            padding: 10px;
-            background-color: #4CAF50;
-            color: white;
-            border-radius: 5px;
-            margin: 5px;
-            display: inline-block;
-        }
-
-        input[type="radio"] {
-            display: none;
-        }
-
-        #amount-content, #result-content {
+        #result {
             margin-top: 20px;
+            font-weight: bold;
         }
 
-        .currency-symbol {
-            font-size: 24px;
-            vertical-align: middle;
+        img {
+            width: 50px;
+            height: 50px;
+            margin: 0 5px;
         }
     </style>
 </head>
 <body>
 
 <div id="calculator">
-    <h2>Currency Notes Calculator</h2>
-    
-    <label for="amount">Enter a 3-digit number:</label>
-    <input type="radio" id="amount" name="tab" checked>
-    <div id="amount-content" class="tab-content">
-        <input type="text" id="amountInput" maxlength="3">
-        <label for="result">Calculate</label>
-    </div>
-    
-    <label for="result">Result</label>
-    <input type="radio" id="result" name="tab">
-    <div id="result-content" class="tab-content">
-        <div id="result"></div>
-    </div>
-    
-    <script>
-        function calculateNotes() {
-            var amount = document.getElementById("amountInput").value;
+    <h2>Currency Unit Calculator</h2>
+    <label for="amount">Enter a number:</label>
+    <input type="text" id="amount">
+    <button onclick="calculateCurrencyUnits()">Calculate</button>
 
-            if (amount.length !== 3 || isNaN(amount)) {
-                alert("Please enter a valid 3-digit number.");
-                return;
-            }
-
-            amount = parseInt(amount);
-
-            var notes500 = Math.floor(amount / 500);
-            var remainder = amount % 500;
-
-            var notes100 = Math.floor(remainder / 100);
-            remainder %= 100;
-
-            var notes50 = Math.floor(remainder / 50);
-            remainder %= 50;
-
-            var notes20 = Math.floor(remainder / 20);
-            remainder %= 20;
-
-            var notes10 = Math.floor(remainder / 10);
-            remainder %= 10;
-
-            var notes5 = Math.floor(remainder / 5);
-            remainder %= 5;
-
-            var notes1 = remainder;
-
-            var resultDiv = document.getElementById("result");
-            resultDiv.innerHTML = `
-                <p>Currency notes needed:</p>
-                <p>500: ${notes500} notes <span class="currency-symbol">₨</span></p>
-                <p>100: ${notes100} notes <span class="currency-symbol">₨</span></p>
-                <p>50: ${notes50} notes <span class="currency-symbol">₨</span></p>
-                <p>20: ${notes20} notes <span class="currency-symbol">₨</span></p>
-                <p>10: ${notes10} notes <span class="currency-symbol">₨</span></p>
-                <p>5: ${notes5} notes <span class="currency-symbol">₨</span></p>
-                <p>1: ${notes1} notes <span class="currency-symbol">₨</span></p>
-            `;
-        }
-    </script>
+    <div id="result"></div>
 </div>
+
+<script>
+    function calculateCurrencyUnits() {
+        var amount = document.getElementById("amount").value;
+
+        if (isNaN(amount) || amount < 0) {
+            alert("Please enter a valid positive number.");
+            return;
+        }
+
+        amount = parseInt(amount);
+
+        var units5000 = Math.floor(amount / 5000);
+        var remainder = amount % 5000;
+
+        var units1000 = Math.floor(remainder / 1000);
+        remainder %= 1000;
+
+        var units500 = Math.floor(remainder / 500);
+        remainder %= 500;
+
+        var units100 = Math.floor(remainder / 100);
+        remainder %= 100;
+
+        var units50 = Math.floor(remainder / 50);
+        remainder %= 50;
+
+        var units20 = Math.floor(remainder / 20);
+        remainder %= 20;
+
+        var units10 = Math.floor(remainder / 10);
+        remainder %= 10;
+
+        var units5 = Math.floor(remainder / 5);
+        remainder %= 5;
+
+        var units1 = remainder;
+
+        var resultDiv = document.getElementById("result");
+        resultDiv.innerHTML = `
+            <p>Currency units needed:</p>
+            <p>5000: ${units5000}Currency units </p>
+            <p>1000: ${units1000}Currency units </p>
+            <p>500: ${units500} Currency units </p>
+            <p>100: ${units100}Currency units</p>
+            <p>50: ${units50}Currency units</p>
+            <p>20: ${units20}Currency units </p>
+            <p>10: ${units10}Currency units </p>
+            <p>5: ${units5}Currency units</p>
+            <p>1: ${units1}Currency units</p>
+        `;
+    }
+</script>
 
 </body>
 </html>
