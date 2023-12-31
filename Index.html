@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Notes Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        #calculator {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        #amount:checked + #amount-content,
+        #result:checked + #result-content {
+            display: block;
+        }
+
+        label {
+            cursor: pointer;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
+            margin: 5px;
+            display: inline-block;
+        }
+
+        input[type="radio"] {
+            display: none;
+        }
+
+        #amount-content, #result-content {
+            margin-top: 20px;
+        }
+
+        .currency-symbol {
+            font-size: 24px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+
+<div id="calculator">
+    <h2>Currency Notes Calculator</h2>
+    
+    <label for="amount">Enter a 3-digit number:</label>
+    <input type="radio" id="amount" name="tab" checked>
+    <div id="amount-content" class="tab-content">
+        <input type="text" id="amountInput" maxlength="3">
+        <label for="result">Calculate</label>
+    </div>
+    
+    <label for="result">Result</label>
+    <input type="radio" id="result" name="tab">
+    <div id="result-content" class="tab-content">
+        <div id="result"></div>
+    </div>
+    
+    <script>
+        function calculateNotes() {
+            var amount = document.getElementById("amountInput").value;
+
+            if (amount.length !== 3 || isNaN(amount)) {
+                alert("Please enter a valid 3-digit number.");
+                return;
+            }
+
+            amount = parseInt(amount);
+
+            var notes500 = Math.floor(amount / 500);
+            var remainder = amount % 500;
+
+            var notes100 = Math.floor(remainder / 100);
+            remainder %= 100;
+
+            var notes50 = Math.floor(remainder / 50);
+            remainder %= 50;
+
+            var notes20 = Math.floor(remainder / 20);
+            remainder %= 20;
+
+            var notes10 = Math.floor(remainder / 10);
+            remainder %= 10;
+
+            var notes5 = Math.floor(remainder / 5);
+            remainder %= 5;
+
+            var notes1 = remainder;
+
+            var resultDiv = document.getElementById("result");
+            resultDiv.innerHTML = `
+                <p>Currency notes needed:</p>
+                <p>500: ${notes500} notes <span class="currency-symbol">₨</span></p>
+                <p>100: ${notes100} notes <span class="currency-symbol">₨</span></p>
+                <p>50: ${notes50} notes <span class="currency-symbol">₨</span></p>
+                <p>20: ${notes20} notes <span class="currency-symbol">₨</span></p>
+                <p>10: ${notes10} notes <span class="currency-symbol">₨</span></p>
+                <p>5: ${notes5} notes <span class="currency-symbol">₨</span></p>
+                <p>1: ${notes1} notes <span class="currency-symbol">₨</span></p>
+            `;
+        }
+    </script>
+</div>
+
+</body>
+</html>
